@@ -3,12 +3,24 @@ import Header from '../../components/Header'
 import { sanityClient, urlFor } from '../../sanity'
 import { Post } from '../../typings'
 import PortableText from 'react-portable-text'
-
+import { useForm, SubmitHandler } from 'react-hook-form'
 interface Props {
   post: Post
 }
 
+interface IFormInput {
+  _id: string
+  name: string
+  email: string
+  comment: string
+}
+
 function Post({ post }: Props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>()
   return (
     <main>
       <Header />
@@ -64,25 +76,42 @@ function Post({ post }: Props) {
       </article>
 
       <hr className="my-5 mx-auto max-w-lg border border-yellow-500" />
-      <form className="flex flex-col p-5 max-w-2xl mx-auto mb-10">
+      <form className="mx-auto mb-10 flex max-w-2xl flex-col p-5">
         <h3 className="text-sm text-yellow-500">Enjoyed This Article</h3>
-        <h4 className="text-3xl font-bold" >Leave a comment below</h4>
-        <hr className="py-3 mt-2"/>
-        <label className="block mb-5 ">
+        <h4 className="text-3xl font-bold">Leave a comment below</h4>
+        <hr className="mt-2 py-3" />
+
+        <input
+        {...register("_id")}
+        type="hidden"
+        name="_id"
+        value={post._id}
+        />
+        <label className="mb-5 block ">
           <span className="text-gray-700">Name</span>
-          <input className="shadow border rounded py-2 px-3 form-input mt-1  block w-full ring-yellow-500 outline-none focus:ring" placeholder="John Doe" type="text" />
+          <input
+            className="form-input mt-1 block w-full rounded border py-2  px-3 shadow outline-none ring-yellow-500 focus:ring"
+            placeholder="John Doe"
+            type="text"
+          />
         </label>
-        <label className="block mb-5 ">
+        <label className="mb-5 block ">
           <span className="text-gray-700">Email</span>
-          <input className="shadow border rounded py-2 px-3 form-input mt-1  block w-full ring-yellow-500 outline-none focus:ring"  placeholder="John Doe" type="text" />
+          <input
+            className="form-input mt-1 block w-full rounded border py-2  px-3 shadow outline-none ring-yellow-500 focus:ring"
+            placeholder="John Doe"
+            type="text"
+          />
         </label>
 
-        <label className="block mb-5 ">
+        <label className="mb-5 block ">
           <span className="text-gray-700">Comment</span>
-          <textarea className="shadow border rounded py-2 px-3 form-textarea mt-1 block w-full ring-yellow-500 outline-none focus:ring" placeholder="John Doe"  rows={8} />
+          <textarea
+            className="form-textarea mt-1 block w-full rounded border py-2 px-3 shadow outline-none ring-yellow-500 focus:ring"
+            placeholder="John Doe"
+            rows={8}
+          />
         </label>
-
-        
       </form>
     </main>
   )
