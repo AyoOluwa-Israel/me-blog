@@ -5,6 +5,7 @@ import { Post } from '../../typings'
 import PortableText from 'react-portable-text'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useState } from 'react'
+import Head from 'next/head'
 interface Props {
   post: Post
 }
@@ -18,7 +19,7 @@ interface IFormInput {
 
 function Post({ post }: Props) {
   const [submitted, setSubmitted] = useState(false)
-  console.log(post)
+  // console.log(post)
   const {
     register,
     handleSubmit,
@@ -31,16 +32,20 @@ function Post({ post }: Props) {
       body: JSON.stringify(data),
     })
       .then(() => {
-        console.log(data)
+        // console.log(data)
         setSubmitted(true)
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
         setSubmitted(false)
       })
   }
   return (
     <main>
+      <Head>
+        <title>{post.title}</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Header />
 
       <img
@@ -174,7 +179,7 @@ function Post({ post }: Props) {
           <div key={comment._id}>
             <p>
               {' '}
-              <span className="text-yellow-500">{comment.name}</span> {" "}: {" "}
+              <span className="text-yellow-500">{comment.name}</span> :{' '}
               {comment.comment}
             </p>
           </div>
